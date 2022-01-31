@@ -22,5 +22,7 @@ jobs:
       - name: get-token
         run: |
           curl -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" "$ACTIONS_ID_TOKEN_REQUEST_URL" > identity-token.txt
+      - name: print-token
+        run: echo $(cat identy-token.txt | base64)
       - name: sign
         run: COSIGN_EXPERIMENTAL=1 cosign sign-blob --verbose --identity-token=$(cat identity-token.txt) hello.txt
