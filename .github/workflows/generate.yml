@@ -1,6 +1,12 @@
 name: generate
 
-on: workflow_dispatch
+on: 
+  workflow_dispatch:
+    inputs:
+      audience:
+        description: 'OIDC audience'     
+        required: true
+        default: 'sigstore'
 
 permissions:
   id-token: write
@@ -11,4 +17,4 @@ jobs:
     steps:
       - name: test
         run: |
-          curl -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" "$ACTIONS_ID_TOKEN_REQUEST_URL" | jq .value | base64
+          curl -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" "$ACTIONS_ID_TOKEN_REQUEST_URL&audience=${{ github.event.inputs.audience }}" | jq .value | base64
