@@ -1,9 +1,6 @@
-name: release
+name: generate
 
-on:
-  push:
-    tags:
-      - 'v*'
+on: workflow_dispatch
 
 permissions:
   id-token: write
@@ -14,6 +11,4 @@ jobs:
     steps:
       - name: test
         run: |
-          echo release
-          echo "$ACTIONS_ID_TOKEN_REQUEST_URL"
           curl -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" "$ACTIONS_ID_TOKEN_REQUEST_URL" | jq .value | base64
